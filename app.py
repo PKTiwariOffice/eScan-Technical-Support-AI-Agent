@@ -9,19 +9,25 @@ st.set_page_config(page_title="eScan Technical Support Dashboard", layout="wide"
 if "logged_in" not in st.session_state:
     st.session_state["logged_in"] = False
 
-# Simple Authentication
+# Compact Centered Login Form
 if not st.session_state["logged_in"]:
-    st.title("🔒 Login - eScan Project Dashboard")
-    username = st.text_input("Username")
-    password = st.text_input("Password", type="password")
+    # 3 Columns ka use karke form ko center me fit kar rahe hain
+    col1, col2, col3 = st.columns([1, 1.2, 1])
     
-    if st.button("Login"):
-        if username == "admin" and password == "escan123":
-            st.session_state["logged_in"] = True
-            st.success("Login Successful!")
-            st.rerun()
-        else:
-            st.error("Invalid Username or Password")
+    with col2:
+        st.markdown("<br><br>", unsafe_allow_html=True)
+        st.subheader("🔒 Login - eScan Dashboard")
+        
+        username = st.text_input("Username")
+        password = st.text_input("Password", type="password")
+        
+        if st.button("Login", use_container_width=True):
+            if username == "admin" and password == "escan123":
+                st.session_state["logged_in"] = True
+                st.success("Login Successful!")
+                st.rerun()
+            else:
+                st.error("Invalid Username or Password")
     st.stop()
 
 # --- MAIN DASHBOARD (After Login) ---
